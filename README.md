@@ -30,3 +30,7 @@
 - GPT
     - Search Bar
     - Movie Suggestion
+
+# Active Bug
+- on multiple sign in / sign up the error msg is not showing
+- error for valid email password
