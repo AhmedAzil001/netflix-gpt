@@ -1,23 +1,85 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
 import { validateCred } from "../utils/Regex";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignUp, setSignUp] = useState(false);
-  const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef();
   const password = useRef();
+  const name = useRef();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    const errorMessage = validateCred(
-      email.current.value,
-      password.current.value
-    );
-    if (errorMessage != null) setError(true);
-    else setError(false);
-  };
+    setErrorMessage(null)
+    const errorMsg = validateCred(email.current.value, password.current.value);
+    if (errorMessage !== null) {
+      return;
+    }
 
-  
+    if (isSignUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value,
+            photoURL: "",
+          })
+            .then(() => {
+              const { uid, email, displayName } = auth.currentUser;
+              dispatch(
+                addUser({ uid: uid, email: email, displayName: displayName })
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          console.log(user);
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          setErrorMessage(errorMessage);
+        });
+    } else {
+      //signin
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
+    }
+  };
 
   return (
     <div>
@@ -39,6 +101,7 @@ const Login = () => {
         </h1>
         {isSignUp && (
           <input
+            ref={name}
             className="p-3 bg-transparent border-[1px] outline-none text-white border-white rounded placeholder:text-white"
             type="text"
             placeholder="Name"
@@ -47,24 +110,22 @@ const Login = () => {
         <div className="relative flex flex-col ">
           <input
             ref={email}
-            className={`p-3 bg-transparent border-[1px] outline-none  rounded placeholder:text-white ${isError? 'border-red-600':'border-white'}`}
+            className={`p-3 bg-transparent border-[1px] outline-none  rounded text-white placeholder:text-white ${
+              errorMessage ? "border-red-600" : "border-white"
+            }`}
             type="text"
             placeholder="Email Address"
           />
-          <span className="absolute top-[3.3rem] text-[0.85rem] text-red-600">
-            {isError && "Please enter a valid email"}
-          </span>
         </div>
         <div className="relative flex flex-col">
           <input
             ref={password}
-            className={`p-3 bg-transparent border-[1px] outline-none  rounded placeholder:text-white ${isError? 'border-red-600':'border-white'}`}
+            className={`p-3 bg-transparent border-[1px] outline-none text-white  rounded placeholder:text-white ${
+              errorMessage ? "border-red-600" : "border-white"
+            }`}
             type="password"
             placeholder="Password"
           />
-          <span className="absolute top-[3.3rem] text-[0.85rem] text-red-600">
-            {isError && "Please enter a valid password"}
-          </span>
         </div>
         <button
           onClick={() => handleButtonClick()}
@@ -93,6 +154,7 @@ const Login = () => {
             </button>
           </p>
         )}
+        <p className="text-white">{errorMessage}</p>
       </form>
     </div>
   );

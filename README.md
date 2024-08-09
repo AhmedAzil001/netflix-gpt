@@ -1,6 +1,18 @@
 # Netflix + GPT
-- Netflix features
-- use GPT to recommend movie if a user search some keyword (like : indian horror)
+- Header
+- Routing of App
+- login form
+- signup form
+- form validation
+- useRef Hook
+- Firebase setup
+- implmented sign up user
+- implemented sign in user
+- created store and userslice
+- when user sign up we updated the display name 
+- after update dispachted action to add user in store
+- after user sign out user gets deleted from store
+- then after signin or sign up page is redirected to home i.e. movie page
 
 # Features
 - LogIn / SignUp
