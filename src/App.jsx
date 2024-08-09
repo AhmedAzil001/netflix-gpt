@@ -1,7 +1,10 @@
 import { useState } from "react";
+import Body from "./components/Body";
+
+
 
 function App() {
-  return <div>hello</div>;
+  return <Body/>;
 }
 
 export default App;
