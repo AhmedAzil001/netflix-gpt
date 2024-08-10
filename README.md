@@ -32,5 +32,11 @@
     - Movie Suggestion
 
 # Active Bug
-- on multiple sign in / sign up the error msg is not showing
 - error for valid email password
+- on closing the tab it is signing out but the store still has the user information
+- sign out showing in sign in/sing up page
+
+# Solved bug
+- on multiple sign in / sign up the error msg is not showing
+- when i enter email and password in sign in/ sign up then after changing to either the value of email and password remains there in input field 
+- after sign out user still able to go "/browse"  

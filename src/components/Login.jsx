@@ -7,77 +7,74 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignUp, setSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const email = useRef();
-  const password = useRef();
-  const name = useRef();
-  const navigate = useNavigate();
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
-    setErrorMessage(null)
     const errorMsg = validateCred(email.current.value, password.current.value);
-    if (errorMessage !== null) {
-      return;
-    }
-
-    if (isSignUp) {
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          updateProfile(auth.currentUser, {
-            displayName: name.current.value,
-            photoURL: "",
-          })
-            .then(() => {
-              const { uid, email, displayName } = auth.currentUser;
-              dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName })
-              );
+    if (errorMsg === null) {
+      if (isSignUp) {
+        createUserWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            updateProfile(auth.currentUser, {
+              displayName: name.current.value,
+              photoURL: "",
             })
-            .catch((error) => {
-              console.log(error);
-            });
-          console.log(user);
-          navigate("/browse");
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-          setErrorMessage(errorMessage);
-        });
+              .then(() => {
+                const { uid, email, displayName } = auth.currentUser;
+                dispatch(
+                  addUser({ uid: uid, email: email, displayName: displayName })
+                );
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            console.log(user);
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            setErrorMessage(errorMessage);
+          });
+      } else {
+        //signin
+        signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorMessage);
+            console.log(errorMessage, errorCode);
+          });
+      }
     } else {
-      //signin
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage);
-        });
+      setErrorMessage(errorMsg);
+      console.log(errorMsg)
     }
   };
 
@@ -104,7 +101,7 @@ const Login = () => {
             ref={name}
             className="p-3 bg-transparent border-[1px] outline-none text-white border-white rounded placeholder:text-white"
             type="text"
-            placeholder="Name"
+            placeholder="Full Name"
           />
         )}
         <div className="relative flex flex-col ">
@@ -137,7 +134,12 @@ const Login = () => {
           <p className=" text-slate-300 font-normal flex items-center gap-1">
             Already a user?
             <button
-              onClick={() => setSignUp(!isSignUp)}
+              onClick={() =>{ 
+                setSignUp(!isSignUp)
+                email.current.value=null
+                password.current.value=null
+                name.current.value=null
+              }}
               className=" text-white font-semibold"
             >
               Sign in now.
