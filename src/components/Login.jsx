@@ -43,7 +43,6 @@ const Login = () => {
               .catch((error) => {
                 console.log(error);
               });
-            console.log(user);
             // ...
           })
           .catch((error) => {
@@ -74,7 +73,7 @@ const Login = () => {
       }
     } else {
       setErrorMessage(errorMsg);
-      console.log(errorMsg)
+      console.log(errorMsg);
     }
   };
 
@@ -134,11 +133,11 @@ const Login = () => {
           <p className=" text-slate-300 font-normal flex items-center gap-1">
             Already a user?
             <button
-              onClick={() =>{ 
-                setSignUp(!isSignUp)
-                email.current.value=null
-                password.current.value=null
-                name.current.value=null
+              onClick={() => {
+                setSignUp(!isSignUp);
+                email.current.value = null;
+                password.current.value = null;
+                name.current.value = null;
               }}
               className=" text-white font-semibold"
             >
@@ -156,7 +155,7 @@ const Login = () => {
             </button>
           </p>
         )}
-        <p className="text-white">{errorMessage}</p>
+        <p className="text-red-600">{errorMessage}</p>
       </form>
     </div>
   );
