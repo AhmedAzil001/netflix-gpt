@@ -40,11 +40,7 @@ const Header = () => {
 
   return (
     <div>
-      <img
-        className="w-44 absolute ml-24 p-2 z-10 bg-gradient-to-b from-black"
-        src={LOGO}
-        alt="Logo"
-      />
+      <img className="w-48 absolute ml-24 p-2 z-10" src={LOGO} alt="Logo" />
 
       {user && (
         <button
