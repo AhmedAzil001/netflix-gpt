@@ -5,7 +5,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGO } from "../utils/constants";
-import { removeNowPlayingMovie } from "../utils/movieSlice";
+import { removeNowPlayingMovie, removeVideo } from "../utils/movieSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const Header = () => {
       } else {
         dispatch(removeUser());
         dispatch(removeNowPlayingMovie());
+        dispatch(removeVideo());
         navigate("/");
       }
     });

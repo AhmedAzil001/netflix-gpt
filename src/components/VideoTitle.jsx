@@ -3,7 +3,7 @@ import useVideoData from "../hooks/useVideoData";
 const VideoTitle = ({ title, overview, id }) => {
   useVideoData(id);
   return (
-    <div className="w-screen aspect-video pt-96 pl-10 bg-gradient-to-r from-black text-white absolute">
+    <div className="w-full h-[101vh] pt-96 pl-10 bg-gradient-to-r from-black text-white absolute">
       <h1 className="text-4xl mb-2 font-bold">{title}</h1>
       <p className="mb-2 w-1/4">{overview}</p>
 
