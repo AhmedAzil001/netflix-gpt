@@ -6,7 +6,7 @@ import VideoPlayer from "./videoPlayer";
 const MainContainer = () => {
   const movie = useSelector((store) => store.movie?.nowPlayingMovies);
   if (!movie) return;
-  const mainMovie = movie[0];
+  const mainMovie = movie[1];
   
   const {original_title,overview,id} = mainMovie;
   return (
