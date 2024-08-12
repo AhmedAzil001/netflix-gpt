@@ -2,6 +2,7 @@ import Header from "./Header";
 import useNowPlayingMovie from "../hooks/useNowPlayingMovies";
 import { useSelector } from "react-redux";
 import MainContainer from "./mainContainer";
+import SecondContainer from "./SecondContainer";
 
 const Browse = () => {
   useNowPlayingMovie();
@@ -10,6 +11,7 @@ const Browse = () => {
     <div>
       <Header />
       <MainContainer />
+      <SecondContainer/>
     </div>
   );
 };

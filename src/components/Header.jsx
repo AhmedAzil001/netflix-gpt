@@ -8,7 +8,7 @@ import { LOGO } from "../utils/constants";
 import {
   removeNowPlayingMovie,
   removeVideo,
-  addVideo,
+  removePopularMovie,
 } from "../utils/movieSlice";
 
 const Header = () => {
@@ -37,6 +37,7 @@ const Header = () => {
       } else {
         dispatch(removeUser());
         dispatch(removeNowPlayingMovie());
+        dispatch(removePopularMovie());
         dispatch(removeVideo());
         navigate("/");
       }
@@ -47,7 +48,7 @@ const Header = () => {
 
   return (
     <div>
-      <img className="w-48 absolute ml-24 p-2 z-10" src={LOGO} alt="Logo" />
+      <img className="w-48 absolute ml-[2rem] p-2 z-10" src={LOGO} alt="Logo" />
 
       {user && (
         <button
