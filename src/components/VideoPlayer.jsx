@@ -4,11 +4,11 @@ const VideoPlayer = () => {
   const movieKey = useSelector((store) => store.movie?.playVideo?.key);
 
   return (
-    <div className="overflow-hidden aspect-video">
+    <div className="overflow-hidden aspect-video bg-black">
       <iframe
-        className="w-[300%] h-[100%] ml-[-100%] mt-[-3%]"
+        className="w-[300%] h-[100%] ml-[-100%] mt-[-7%]"
         src={
-          "https://www.youtube.com/embed/"+movieKey+"?&autoplay=1&mute=1&controls=0&loop=1"
+          "https://www.youtube.com/embed/"+movieKey+"?&loop=1&autoplay=1&mute=1&controls=0"
         }
         allowFullScreen
       ></iframe>

@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,14 +9,14 @@ import {
   removeNowPlayingMovie,
   removeVideo,
   removePopularMovie,
+  removeTopRatedMovie,
 } from "../utils/movieSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const movie = useSelector((state) => state.movie?.playVideo);
-
+  //const [isOpen, setOpen] = useState(false);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -39,6 +39,7 @@ const Header = () => {
         dispatch(removeNowPlayingMovie());
         dispatch(removePopularMovie());
         dispatch(removeVideo());
+        dispatch(removeTopRatedMovie());
         navigate("/");
       }
     });
@@ -51,12 +52,15 @@ const Header = () => {
       <img className="w-48 absolute ml-[2rem] p-2 z-10" src={LOGO} alt="Logo" />
 
       {user && (
-        <button
-          className="text-black absolute z-10 right-4 top-2 bg-slate-300 text-black py-2 px-3 rounded-sm font-medium"
-          onClick={handleSignOut}
-        >
-          Sign Out
-        </button>
+        <div>
+          <img
+            onClick={handleSignOut}
+            className=" cursor-pointer absolute w-12 right-14 top-3 z-10 rounded-sm"
+            src="https://wallpapers.com/images/hd/netflix-profile-pictures-5yup5hd2i60x7ew3.jpg"
+            alt=""
+          />
+          
+        </div>
       )}
     </div>
   );
