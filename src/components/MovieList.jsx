@@ -2,7 +2,6 @@ import MovieCard from "./MovieCard";
 import { FaAngleRight } from "react-icons/fa";
 
 const MovieList = ({ title, data }) => {
-  console.log(data);
   return (
     <div className="px-10 py-5">
       <div>

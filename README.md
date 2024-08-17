@@ -15,6 +15,7 @@
 - then after signin or sign up page is redirected to home i.e. movie page
 - after unmount of component - unsubscribe to onAuthStateChanged
 
+
 # Features
 - LogIn / SignUp
     - LogIn / SignUp page
@@ -34,7 +35,7 @@
 
 # Active Bug
 - error for valid email password
-- on closing the tab it is signing out but the store still has the user information
+- on reload the search page is not rendered
 
 
 # Solved bug
@@ -42,3 +43,4 @@
 - when i enter email and password in sign in/ sign up then after changing to either the value of email and password remains there in input field 
 - after sign out user still able to go "/browse"  
 - sign out showing in sign in/sing up page
+- on closing the tab it is signing out but the store still has the user information

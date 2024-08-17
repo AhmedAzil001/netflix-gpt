@@ -8,7 +8,9 @@ const VideoPlayer = () => {
       <iframe
         className="w-[300%] h-[100%] ml-[-100%] mt-[-7%]"
         src={
-          "https://www.youtube.com/embed/"+movieKey+"?&loop=1&autoplay=1&mute=1&controls=0"
+          "https://www.youtube.com/embed/" +
+          movieKey +
+          "?&loop=1&autoplay=1&mute=1&controls=0"
         }
         allowFullScreen
       ></iframe>
